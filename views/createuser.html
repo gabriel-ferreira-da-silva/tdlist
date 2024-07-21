@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Task</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1> Criar usuário </h1>
+        <form action="/submit-task" method="POST">
+            <label for="userName">Nome:</label>
+            <input type="text" id="userName" name="userName" required>
+
+            <label for="userEmail">Email:</label>
+            <input type="text" id="userEmail" name="userEmail" required>
+
+            <label for="userPassword">Password:</label>
+            <input type="password" id="userPassword" name="userPassword" required>
+
+            <button type="submit">adicionar</button>
+        </form>
+    </div>
+</body>
+</html>
