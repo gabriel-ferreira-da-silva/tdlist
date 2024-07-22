@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Task</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1> Create Task </h1>
+        <form id="taskForm">
+            <label for="name">Task Name:</label>
+            <input type="text" id="name" name="name"><br><br>
+    
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea><br><br>
+    
+            <label for="priority">Priority:</label>
+            <select id="priority" name="priority">
+                <option value='low'>baixo</option>
+                <option value='medium'>medio</option>
+                <option value='high'>alto</option>
+            </select>
+
+            <label for="isEnded">Is Ended:</label>
+            <select id="isEnded" name="isEnded">
+                <option value='false'>false</option>
+                <option value='true'>true</option>
+            </select>
+    
+            <label for="due_date">Due Date:</label>
+            <input type="date" id="due_date" name="due_date"><br><br>
+    
+            <label for="user_id">User ID:</label>
+            <input type="number" id="user_id" name="user_id"><br><br>
+    
+            <button type="submit">Create Task</button>
+        </form>
+    
+        <script>
+            document.getElementById('taskForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+    
+                const formData = new FormData(event.target);
+                const data = {
+                    name: formData.get('name'),
+                    description: formData.get('description'),
+                    priority: formData.get('priority'),
+                    isEnded: formData.get('isEnded'), // Convert checkbox value
+                    due_date: formData.get('due_date'),
+                    user_id: formData.get('user_id')
+                };
+                console.log(data)
+                fetch('http://localhost:8080/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    alert('Task created successfully!');
+                    console.log(result);
+                    console.log(data)
+
+                    
+                })
+                .catch(error => {
+                    alert('Error creating task!');
+                    console.log("deu erro")
+                    console.error(error);
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
