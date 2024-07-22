@@ -19,19 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
 
-app.use(
-    helmet.contentSecurityPolicy({
-        useDefaults: true,
-        directives: {
-            defaultSrc: ["'self'"],
-            imgSrc: ["'self'", "data:", "http://localhost:8080"],
-            connectSrc: ["'self'"],
-            scriptSrc: ["'self'"],
-            styleSrc: ["'self'"]
-        }
-    })
-);
-
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'todouser',
