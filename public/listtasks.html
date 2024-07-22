@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .task-list {
+            margin: 20px;
+        }
+        .task-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .task-item h3 {
+            margin: 0;
+        }
+        .task-item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task List</h1>
+    <div class="task-list" id="task-list">
+        <!-- Tasks will be inserted here -->
+    </div>
+    <script>
+        // Function to fetch tasks from the server and display them
+        async function fetchTasks() {
+            try {
+                const response = await fetch('http://localhost:8080/tasks');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const tasks = await response.json();
+                const taskList = document.getElementById('task-list');
+
+                // Clear any existing tasks
+                taskList.innerHTML = '';
+
+                // Populate the task list with tasks from the server
+                tasks.forEach(task => {
+                    const taskItem = document.createElement('div');
+                    taskItem.classList.add('task-item');
+                    
+                    taskItem.innerHTML = `
+                        <h3>${task.name}</h3>
+                        <p><strong>Description:</strong> ${task.description || 'N/A'}</p>
+                        <p><strong>Priority:</strong> ${task.priority || 'N/A'}</p>
+                    `;
+                    
+                    taskList.appendChild(taskItem);
+                });
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchTasks);
+    </script>
+</body>
+</html>
